@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Votação de Professores</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            background-color: rgb(93, 140, 210);
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+        }
+        select, input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Votação de Professores</h1>
+        <input type="text" id="nomeTutorado" placeholder="Nome do Tutorado" required>
+        <input type="text" id="serieTutorado" placeholder="Série do Tutorado" required>
+        <select id="professores" multiple size="10">
+            <option value="ALINE PRISCILA GARCIA DA SILVA">ALINE PRISCILA GARCIA DA SILVA</option>
+            <option value="ANDREIA DE FATIMA GOMES PIEMONTE">ANDREIA DE FATIMA GOMES PIEMONTE</option>
+            <option value="JUNIOR">JUNIOR</option>
+            <option value="CAIO HENRIQUE ESTRELA CARDIA">CAIO HENRIQUE ESTRELA CARDIA</option>
+            <option value="CLEBER ALBERTO GOMES">CLEBER ALBERTO GOMES</option>
+            <option value="CRISTINA BALDINOTI">CRISTINA BALDINOTI</option>
+            <option value="EDCARLOS DOS SANTOS">EDCARLOS DOS SANTOS</option>
+            <option value="EDINEIA APARECIDA DE SOUZA">EDINEIA APARECIDA DE SOUZA</option>
+            <option value="ELIANE ANDREA DIOMEDES">ELIANE ANDREA DIOMEDES</option>
+            <option value="ELIZA G DOS SANTOS">ELIZA G DOS SANTOS</option>
+            <option value="FLAVIO HENRIQUE CHAVES FILHO">FLAVIO HENRIQUE CHAVES FILHO</option>
+            <option value="GABRIEL RODRIGUES DA SILVA">GABRIEL RODRIGUES DA SILVA</option>
+            <option value="GISLAINE DIAS CAPUTO">GISLAINE DIAS CAPUTO</option>
+            <option value="GRAZIELLE CHRISTINE MARANGONI SCARMANHÃ">GRAZIELLE CHRISTINE MARANGONI SCARMANHÃ</option>
+            <option value="GRAZIELLE DE OLIVEIRA SANTOS">GRAZIELLE DE OLIVEIRA SANTOS</option>
+            <option value="ITALO BERTONCINI">ITALO BERTONCINI</option>
+            <option value="IZAIAS RODRIGUES">IZAIAS RODRIGUES</option>
+            <option value="JANAINA TOGNON">JANAINA TOGNON</option>
+            <option value="JAQUELINE PADERES SCORSAFAVA GARCIA">JAQUELINE PADERES SCORSAFAVA GARCIA</option>
+            <option value="JOSELILIAN LOPES MIRALHA">JOSELILIAN LOPES MIRALHA</option>
+            <option value="JULIANA DE FATIMA SILVA SEGANTIN">JULIANA DE FATIMA SILVA SEGANTIN</option>
+            <option value="LEANDRO HENRIQUE DE SOUZA BEZERRA">LEANDRO HENRIQUE DE SOUZA BEZERRA</option>
+            <option value="LUCILENE ARAUJO ROMANIW RAYMUNDO">LUCILENE ARAUJO ROMANIW RAYMUNDO</option>
+            <option value="LURDES DOS SANTOS ELIAS LIMA">LURDES DOS SANTOS ELIAS LIMA</option>
+            <option value="MAGDA APARECIDA DE OLIVEIRA PRADO">MAGDA APARECIDA DE OLIVEIRA PRADO</option>
+            <option value="MARCIA CRISTINA SIGEMURA">MARCIA CRISTINA SIGEMURA</option>
+            <option value="MARCIO ENRIQUE STANCKEVIZ">MARCIO ENRIQUE STANCKEVIZ</option>
+            <option value="MARIA CANDIDA BRANCO DOS SANTOS">MARIA CANDIDA BRANCO DOS SANTOS</option>
+            <option value="MARIA LUIZA MARTINS DE ARAUJO">MARIA LUIZA MARTINS DE ARAUJO</option>
+            <option value="MARIANA SAKER DE CASTRO PAIVA">MARIANA SAKER DE CASTRO PAIVA</option>
+            <option value="MARINA PAIVA RAMOS">MARINA PAIVA RAMOS</option>
+            <option value="MATHEUS SANTOS DE OLIVEIRA">MATHEUS SANTOS DE OLIVEIRA</option>
+            <option value="MILCE FERREIRA DE MOURA">MILCE FERREIRA DE MOURA</option>
+            <option value="MILENA MORAES DA SILVA">MILENA MORAES DA SILVA</option>
+            <option value="NATHÁLIA VERONESE MARTINS">NATHÁLIA VERONESE MARTINS</option>
+            <option value="ORIEL DE OLIVEIRA E SILVA">ORIEL DE OLIVEIRA E SILVA</option>
+            <option value="RAFAEL MARTINS DOS SANTOS">RAFAEL MARTINS DOS SANTOS</option>
+            <option value="RAQUEL CRISTINA ROSSIGALLI BOL">RAQUEL CRISTINA ROSSIGALLI BOL</option>
+            <option value="RENATO DAVID VALENTE">RENATO DAVID VALENTE</option>
+            <option value="RODRIGO BATISTA">RODRIGO BATISTA</option>
+            <option value="ROSANA LORAINE ARAUJO DE S. ZAMPIERI">ROSANA LORAINE ARAUJO DE S. ZAMPIERI</option>
+            <option value="ROSANE FERREIRA DOS SANTOS GRACIANO">ROSANE FERREIRA DOS SANTOS GRACIANO</option>
+            <option value="SAMUEL MACEDO PERICO">SAMUEL MACEDO PERICO</option>
+            <option value="SAVIA BETHANIA CAVALCANTI">SAVIA BETHANIA CAVALCANTI</option>
+            <option value="SILENE BERTASSI">SILENE BERTASSI</option>
+            <option value="SILVIA REGINA FERREIRA BALLAS">SILVIA REGINA FERREIRA BALLAS</option>
+            <option value="SONIA MARIA NABAS DOS SANTOS">SONIA MARIA NABAS DOS SANTOS</option>
+            <option value="SUELI BATISTETTI VICENTE">SUELI BATISTETTI VICENTE</option>
+            <option value="BRUNO PERES MOITINHO">BRUNO PERES MOITINHO</option>
+            <option value="ROSANA ROSSI">ROSANA ROSSI</option>
+            <option value="KLEBER GONSALVES">KLEBER GONSALVES</option>
+        </select>
+        <button onclick="votar()">Votar</button>
+        <button onclick="cancelarVoto()">Cancelar Voto</button>
+        <button onclick="gerarPDF()">Salvar Seleção em PDF</button>
+        <button onclick="mostrarHistorico()">Mostrar Histórico de Votos</button>
+        <button onclick="limparHistorico()">Limpar Histórico (Admin)</button>
+    </div>
+    <audio id="confirmacao" src="urna.wav" preload="auto"></audio>
+    <script>
+        let votos = JSON.parse(localStorage.getItem('votos')) || {};
+
+        function votar() {
+            const nomeTutorado = document.getElementById('nomeTutorado').value;
+            const serieTutorado = document.getElementById('serieTutorado').value;
+            const select = document.getElementById('professores');
+            const audio = document.getElementById('confirmacao');
+
+            if (!nomeTutorado || !serieTutorado) {
+                alert('Por favor, preencha o nome e a série do tutorado.');
+                return;
+            }
+
+            for (let option of select.selectedOptions) {
+                const professor = option.value;
+                if (!votos[professor]) {
+                    votos[professor] = [];
+                }
+                if (votos[professor].length < 50) {
+                    votos[professor].push({ nomeTutorado, serieTutorado });
+                } else {
+                    alert('O professor ' + professor + ' já recebeu o máximo de 50 votos.');
+                }
+            }
+
+            localStorage.setItem('votos', JSON.stringify(votos));
+            audio.play();
+            alert('Voto registrado com sucesso!');
+        }
+
+        function cancelarVoto() {
+            const nomeTutorado = document.getElementById('nomeTutorado').value;
+            const serieTutorado = document.getElementById('serieTutorado').value;
+
+            if (!nomeTutorado || !serieTutorado) {
+                alert('Por favor, preencha o nome e a série do tutorado para cancelar o voto.');
+                return;
+            }
+
+            for (let professor in votos) {
+                votos[professor] = votos[professor].filter(voto => !(voto.nomeTutorado === nomeTutorado && voto.serieTutorado === serieTutorado));
+            }
+
+            localStorage.setItem('votos', JSON.stringify(votos));
+            alert('Voto cancelado com sucesso!');
+        }
+
+        async function gerarPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            let texto = 'Histórico de Votos Registrados\n\n';
+            let linha = 10;
+
+            for (let professor in votos) {
+                votos[professor].forEach(voto => {
+                    const linhaTexto = `Professor: ${professor} - Tutorado: ${voto.nomeTutorado} - Série: ${voto.serieTutorado}`;
+                    doc.text(linhaTexto, 10, linha);
+                    linha += 10;
+                    if (linha > 280) {
+                        doc.addPage();
+                        linha = 10;
+                    }
+                });
+            }
+
+            doc.save('historico_votos_professores.pdf');
+        }
+
+        function mostrarHistorico() {
+            let texto = 'Histórico Completo de Votos (Professor, Nome do Tutorado, Série):\n\n';
+            for (let professor in votos) {
+                votos[professor].forEach(voto => {
+                    texto += professor + ',' + voto.nomeTutorado + ',' + voto.serieTutorado + '\n';
+                });
+            }
+            alert(texto);
+        }
+
+        function limparHistorico() {
+            const senha = prompt('Digite a senha para limpar o histórico:');
+            if (senha === 'bicudo2025##') {
+                localStorage.removeItem('votos');
+                votos = {};
+                alert('Histórico de votos apagado com sucesso!');
+            } else {
+                alert('Senha incorreta. Ação cancelada.');
+            }
+        }
+    </script>
+</body>
+</html>
